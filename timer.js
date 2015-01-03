@@ -1,93 +1,101 @@
 var APP = {};
 
-APP.timer = {
-	timeInterval: undefined,
-	totalTenths: 0,
-	lapStart: 0,
-	laps: new Array(),
+APP.timer = (function() {
+	var timeInterval = undefined,
+		totalTenths = 0,
+		lapStart = 0,
+		laps = [];
 	
-	start: function() {
-		var that = this;
-		that.lapStart = that.totalTenths;
-		
-		$('#start').prop('disabled', true);
-		$('#lap').prop('disabled', false);
-		$('#stop').prop('disabled', false);
-		$('#reset').prop('disabled', true);
-		
-		this.timeInterval = setInterval( function() {
-			that.totalTenths += 1;
+	return {
+		start: function() {
+			var that = this;
 			
-			var hours = APP.formatter.hours(that.totalTenths);
-			$('#hours').text(hours);
-			
-			var minutes = APP.formatter.minutes(that.totalTenths);
-			$('#minutes').text(minutes);
-			
-			var seconds = APP.formatter.seconds(that.totalTenths);
-			$('#seconds').text(seconds);
-			
-			var millis = APP.formatter.tenths(that.totalTenths);
-			$('#millis').text(millis);
-		}, 100);
-	},
-	
-	stop: function() {
-		$('#start').prop('disabled', false);
-		$('#lap').prop('disabled', true);
-		$('#stop').prop('disabled', true);
-		$('#reset').prop('disabled', false);
+			that.lapStart = that.totalTenths;
 		
-		clearInterval(this.timeInterval);
-	},
-	
-	lap: function() {
-		var lapInMillis = this.totalTenths - this.lapStart;
+			$('#start').prop('disabled', true);
+			$('#lap').prop('disabled', false);
+			$('#stop').prop('disabled', false);
+			$('#reset').prop('disabled', true);
 		
-		console.log(this.totalTenths);
-		
-		this.laps.push(lapInMillis);
-		this.lapStart = this.totalTenths;
-		
-		var lapHours = APP.formatter.hours(lapInMillis);
-		var lapMinutes = APP.formatter.minutes(lapInMillis);
-		var lapSeconds = APP.formatter.seconds(lapInMillis);
-		var lapTenths = APP.formatter.tenths(lapInMillis);
-		
-		var lapTime = lapHours + ":" + lapMinutes + ":" + lapSeconds + "." + lapTenths;
+			this.timeInterval = setInterval( function() {
+				totalTenths += 1;
 				
-		$('#laps').append('<li>' + lapTime + '</li>');
-	},
+				var hours = APP.formatter.hours(totalTenths);
+				$('#hours').text(hours);
+			
+				var minutes = APP.formatter.minutes(totalTenths);
+				$('#minutes').text(minutes);
+			
+				var seconds = APP.formatter.seconds(totalTenths);
+				$('#seconds').text(seconds);
+			
+				var millis = APP.formatter.tenths(totalTenths);
+				$('#millis').text(millis);
+			}, 100);
+		},
 	
-	reset: function() {
-		clearInterval(this.timeInterval);
-		this.totalTenths = 0;
-		$('#hours').text('0');
-		$('#minutes').text('0');
-		$('#seconds').text('0');
-		$('#millis').text('0');
+		stop: function() {
+			$('#start').prop('disabled', false);
+			$('#lap').prop('disabled', true);
+			$('#stop').prop('disabled', true);
+			$('#reset').prop('disabled', false);
 		
-		$('#laps').empty();
-	}
-}
+			clearInterval(this.timeInterval);
+		},
+	
+		lap: function() {
+			var lapInMillis = totalTenths - lapStart;
+		
+			laps.push(lapInMillis);
+			lapStart = totalTenths;
+		
+			var lapHours = APP.formatter.hours(lapInMillis);
+			var lapMinutes = APP.formatter.minutes(lapInMillis);
+			var lapSeconds = APP.formatter.seconds(lapInMillis);
+			var lapTenths = APP.formatter.tenths(lapInMillis);
+		
+			var lapTime = lapHours + ":" + lapMinutes + ":" + lapSeconds + "." + lapTenths;
+				
+			$('#laps').append('<li>' + lapTime + '</li>');
+		},
+	
+		reset: function() {
+			clearInterval(timeInterval);
+			totalTenths = 0;
+			$('#hours').text('00');
+			$('#minutes').text('00');
+			$('#seconds').text('00');
+			$('#millis').text('0');
+		
+			$('#laps').empty();
+		}
+	};
+})();
 
-APP.formatter = {
-	hours: function(totalTenths) {
-		return Math.floor(totalTenths / (60 * 60 * 10)) % 24;
-	},
+APP.formatter = (function() {
 	
-	minutes: function(totalTenths) {
-		return Math.floor(totalTenths / (60 * 10)) % 60;
-	},
-	
-	seconds: function(totalTenths) {
-		return Math.floor(totalTenths / 10) % 60;
-	},
-	
-	tenths: function(totalTenths) {
-		return totalTenths % 10;
+	pad = function(num) {
+		return num < 10 ? "0" + num : num;
 	}
-}
+	
+	return {
+		hours: function(totalTenths) {
+			return pad(Math.floor(totalTenths / (60 * 60 * 10)) % 24);
+		},
+	
+		minutes: function(totalTenths) {
+			return pad(Math.floor(totalTenths / (60 * 10)) % 60);
+		},
+	
+		seconds: function(totalTenths) {
+			return pad(Math.floor(totalTenths / 10) % 60);
+		},
+	
+		tenths: function(totalTenths) {
+			return totalTenths % 10;
+		}
+	};
+})();
 
 $(document).ready(function() {
 	$('#stop').prop('disabled', true);
