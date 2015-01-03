@@ -18,16 +18,16 @@ APP.timer = {
 		this.timeInterval = setInterval( function() {
 			that.totalTenths += 1;
 			
-			var hours = APP.timer.hours(that.totalTenths);
+			var hours = APP.formatter.hours(that.totalTenths);
 			$('#hours').text(hours);
 			
-			var minutes = APP.timer.minutes(that.totalTenths);
+			var minutes = APP.formatter.minutes(that.totalTenths);
 			$('#minutes').text(minutes);
 			
-			var seconds = APP.timer.seconds(that.totalTenths);
+			var seconds = APP.formatter.seconds(that.totalTenths);
 			$('#seconds').text(seconds);
 			
-			var millis = APP.timer.tenths(that.totalTenths);
+			var millis = APP.formatter.tenths(that.totalTenths);
 			$('#millis').text(millis);
 		}, 100);
 	},
@@ -49,10 +49,10 @@ APP.timer = {
 		this.laps.push(lapInMillis);
 		this.lapStart = this.totalTenths;
 		
-		var lapHours = APP.timer.hours(lapInMillis);
-		var lapMinutes = APP.timer.minutes(lapInMillis);
-		var lapSeconds = APP.timer.seconds(lapInMillis);
-		var lapTenths = APP.timer.tenths(lapInMillis);
+		var lapHours = APP.formatter.hours(lapInMillis);
+		var lapMinutes = APP.formatter.minutes(lapInMillis);
+		var lapSeconds = APP.formatter.seconds(lapInMillis);
+		var lapTenths = APP.formatter.tenths(lapInMillis);
 		
 		var lapTime = lapHours + ":" + lapMinutes + ":" + lapSeconds + "." + lapTenths;
 				
@@ -68,8 +68,10 @@ APP.timer = {
 		$('#millis').text('0');
 		
 		$('#laps').empty();
-	},
-	
+	}
+}
+
+APP.formatter = {
 	hours: function(totalTenths) {
 		return Math.floor(totalTenths / (60 * 60 * 10)) % 24;
 	},
@@ -87,7 +89,7 @@ APP.timer = {
 	}
 }
 
-$(document).ready(function () {
+$(document).ready(function() {
 	$('#stop').prop('disabled', true);
 	$('#lap').prop('disabled', true);
 	$('#reset').prop('disabled', true);
