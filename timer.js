@@ -8,16 +8,14 @@ APP.timer = (function() {
 	
 	return {
 		start: function() {
-			var that = this;
-			
-			that.lapStart = that.totalTenths;
+			lapStart = totalTenths;
 		
 			$('#start').prop('disabled', true);
 			$('#lap').prop('disabled', false);
 			$('#stop').prop('disabled', false);
 			$('#reset').prop('disabled', true);
 		
-			this.timeInterval = setInterval( function() {
+			timeInterval = setInterval( function() {
 				totalTenths += 1;
 				
 				var hours = APP.formatter.hours(totalTenths);
@@ -40,7 +38,7 @@ APP.timer = (function() {
 			$('#stop').prop('disabled', true);
 			$('#reset').prop('disabled', false);
 		
-			clearInterval(this.timeInterval);
+			clearInterval(timeInterval);
 		},
 	
 		lap: function() {
@@ -98,6 +96,7 @@ APP.formatter = (function() {
 })();
 
 $(document).ready(function() {
+	$('#start').prop('disabled', false);
 	$('#stop').prop('disabled', true);
 	$('#lap').prop('disabled', true);
 	$('#reset').prop('disabled', true);
