@@ -3,28 +3,34 @@
 	<link rel="stylesheet" type="text/css" href="timer.css" />
 </head>
 <body>
-	<pre>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-		<script src="timer.js"></script>
-	</pre>
 	<section>
 		<button disabled="disabled" id="start">start</button>
 		<button disabled="disabled" id="stop">stop</button>
 		<button disabled="disabled" id="lap">lap</button>
 		<button disabled="disabled" id="reset">reset</button>
 	</section>
-	<section>
-		<div id="display">
-			<span id="hours">00</span>
+	<section id="display">
+		<div id="lapDisplay">
+			<span id="lapHours">00</span>
 			<span id="divider">:</span>
-			<span id="minutes">00</span>
+			<span id="lapMinutes">00</span>
 			<span id="divider">:</span>
-			<span id="seconds">00</span>
+			<span id="lapSeconds">00</span>
 			<span id="divider">.</span>
-			<span id="millis">0</span>
+			<span id="lapMillis">00</span>
+		</div>
+		<div id="mainDisplay">
+			<span id="totalHours">00</span>
+			<span id="divider">:</span>
+			<span id="totalMinutes">00</span>
+			<span id="divider">:</span>
+			<span id="totalSeconds">00</span>
+			<span id="divider">.</span>
+			<span id="totalMillis">00</span>
 		</div>
 		<ul id="laps">
 		</ul>
 	</section>
 </body>
 </html>
+<script src="timer.js"></script><!-- not sure what the best practice is here...  Inside body tag? Instide html tag? -->
