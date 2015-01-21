@@ -3,34 +3,27 @@
 	<link rel="stylesheet" type="text/css" href="timer.css" />
 </head>
 <body>
+	<div id="header">
+		<span>Stopwatch</span>
+	</div>
 	<section>
-		<button disabled="disabled" id="start">start</button>
-		<button disabled="disabled" id="stop">stop</button>
-		<button disabled="disabled" id="lap">lap</button>
-		<button disabled="disabled" id="reset">reset</button>
-	</section>
-	<section id="display">
-		<div id="lapDisplay">
-			<span id="lapHours">00</span>
-			<span id="divider">:</span>
-			<span id="lapMinutes">00</span>
-			<span id="divider">:</span>
-			<span id="lapSeconds">00</span>
-			<span id="divider">.</span>
-			<span id="lapMillis">00</span>
+		<div id="display">
+			<div id="lapDisplay">00:00:00.00</div>
+			<div id="mainDisplay">00:00:00.00</div>
 		</div>
-		<div id="mainDisplay">
-			<span id="totalHours">00</span>
-			<span id="divider">:</span>
-			<span id="totalMinutes">00</span>
-			<span id="divider">:</span>
-			<span id="totalSeconds">00</span>
-			<span id="divider">.</span>
-			<span id="totalMillis">00</span>
+	</section><br />
+	<section>
+		<div id="buttons">
+			<button id="start">Start</button>
+			<button id="stop">Stop</button>
+			<button id="lap">Lap</button>
+			<button id="reset">Reset</button>
 		</div>
-		<ul id="laps">
-		</ul>
-	</section>
+		<div id="laps">
+			<ul id="lap-list">
+			</ul>
+		</div>
+	</section><br />
 </body>
 </html>
 <script src="timer.js"></script><!-- not sure what the best practice is here...  Inside body tag? Instide html tag? -->

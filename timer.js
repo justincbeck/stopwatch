@@ -11,10 +11,11 @@ APP.timer = (function() {
 		start: function() {
 			lapStart = totalMillis;
 		
-			document.getElementById('start').disabled = true;
-			document.getElementById('stop').disabled = false;
+			document.getElementById('start').className = 'hidden';
+			document.getElementById('stop').className = '';
+			document.getElementById('lap').className = '';
+			document.getElementById('reset').className = 'hidden';
 			document.getElementById('lap').disabled = false;
-			document.getElementById('reset').disabled = true;
 		
 			timeInterval = setInterval( function() {
 				totalMillis += 1;
@@ -24,29 +25,28 @@ APP.timer = (function() {
 				var currentMinutes = APP.formatter.minutes(totalMillis);
 				var currentSeconds = APP.formatter.seconds(totalMillis);
 				var currentMillis = APP.formatter.millis(totalMillis);
-
-				document.getElementById('totalHours').innerText = currentHours;
-				document.getElementById('totalMinutes').innerText = currentMinutes;
-				document.getElementById('totalSeconds').innerText = currentSeconds;
-				document.getElementById('totalMillis').innerText = currentMillis;
+				
+				var currentTime = currentHours + ":" + currentMinutes + ":" + currentSeconds + "." + currentMillis;
+				
+				document.getElementById('mainDisplay').innerHTML = currentTime;
 
 				var currentLapHours = APP.formatter.hours(lapMillis);
 				var currentLapMinutes = APP.formatter.minutes(lapMillis);
 				var currentLapSeconds = APP.formatter.seconds(lapMillis);
 				var currentLapMillis = APP.formatter.millis(lapMillis);
+				
+				var lapTime = currentLapHours + ":" + currentLapMinutes + ":" + currentLapSeconds + "." + currentLapMillis;
 
-				document.getElementById('lapHours').innerText = currentLapHours;
-				document.getElementById('lapMinutes').innerText = currentLapMinutes;
-				document.getElementById('lapSeconds').innerText = currentLapSeconds;
-				document.getElementById('lapMillis').innerText = currentLapMillis;
+				document.getElementById('lapDisplay').innerHTML = lapTime;
 			}, 10);
 		},
 	
 		stop: function() {
-			document.getElementById('start').disabled = false;
+			document.getElementById('start').className = '';
+			document.getElementById('stop').className = 'hidden';
+			document.getElementById('lap').className = 'hidden';
 			document.getElementById('lap').disabled = true;
-			document.getElementById('stop').disabled = true;
-			document.getElementById('reset').disabled = false;
+			document.getElementById('reset').className = '';
 		
 			clearInterval(timeInterval);
 		},
@@ -64,11 +64,12 @@ APP.timer = (function() {
 			var currentLapMinutes = APP.formatter.minutes(currentLapInMillis);
 			var currentLapSeconds = APP.formatter.seconds(currentLapInMillis);
 			var currentLapMillis = APP.formatter.millis(currentLapInMillis);
-		
-			var lapTime = currentLapHours + ":" + currentLapMinutes + ":" + currentLapSeconds + "." + currentLapMillis;
-			var currentLaps = document.getElementById('laps').innerHTML;
+			
+			var lapCount = "<span id=\"lap-label\">Lap " + laps.length + "</span>";
+			var lapTime = "<span id=\"lap-time\">Lap " + currentLapHours + ":" + currentLapMinutes + ":" + currentLapSeconds + "." + currentLapMillis + "</span>";
+			var currentLaps = document.getElementById('lap-list').innerHTML;
 				
-			document.getElementById('laps').innerHTML = currentLaps + '\n<li>' + lapTime + '</li>';
+			document.getElementById('lap-list').innerHTML = currentLaps + '\n<li>' + lapCount + lapTime + '</li>';
 		},
 	
 		reset: function() {
@@ -76,17 +77,16 @@ APP.timer = (function() {
 			
 			totalMillis = 0;
 			lapMillis = 0;
-			document.getElementById('totalHours').innerText = '00';
-			document.getElementById('totalMinutes').innerText = '00';
-			document.getElementById('totalSeconds').innerText = '00';
-			document.getElementById('totalMillis').innerText = '00';
-
-			document.getElementById('lapHours').innerText = '00';
-			document.getElementById('lapMinutes').innerText = '00';
-			document.getElementById('lapSeconds').innerText = '00';
-			document.getElementById('lapMillis').innerText = '00';
+			
+			var time = '00:00:00.00';
+			document.getElementById('mainDisplay').innerHTML = time;
+			document.getElementById('lapDisplay').innerHTML = time;
 		
-			document.getElementById('laps').innerHTML = '';
+			document.getElementById('lap-list').innerHTML = '';
+			
+			document.getElementById('lap').className = '';
+			document.getElementById('lap').disabled = true;
+			document.getElementById('reset').className = 'hidden';
 		}
 	};
 })();
@@ -116,10 +116,9 @@ APP.formatter = (function() {
 	};
 })();
 
-document.getElementById('start').disabled = false;
-document.getElementById('stop').disabled = true;
+document.getElementById('stop').className = 'hidden';
+document.getElementById('reset').className = 'hidden';
 document.getElementById('lap').disabled = true;
-document.getElementById('reset').disabled = false;
 
 document.getElementById('start').onclick = function () {
 	APP.timer.start();
