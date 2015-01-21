@@ -21,27 +21,23 @@ APP.timer = (function() {
 				lapMillis += 1;
 				
 				var currentHours = APP.formatter.hours(totalMillis);
-				document.getElementById('totalHours').innerText = currentHours;
-
 				var currentMinutes = APP.formatter.minutes(totalMillis);
-				document.getElementById('totalMinutes').innerText = currentMinutes;
-
 				var currentSeconds = APP.formatter.seconds(totalMillis);
-				document.getElementById('totalSeconds').innerText = currentSeconds;
-
 				var currentMillis = APP.formatter.millis(totalMillis);
+
+				document.getElementById('totalHours').innerText = currentHours;
+				document.getElementById('totalMinutes').innerText = currentMinutes;
+				document.getElementById('totalSeconds').innerText = currentSeconds;
 				document.getElementById('totalMillis').innerText = currentMillis;
 
 				var currentLapHours = APP.formatter.hours(lapMillis);
-				document.getElementById('lapHours').innerText = currentLapHours;
-			
 				var currentLapMinutes = APP.formatter.minutes(lapMillis);
-				document.getElementById('lapMinutes').innerText = currentLapMinutes;
-			
 				var currentLapSeconds = APP.formatter.seconds(lapMillis);
-				document.getElementById('lapSeconds').innerText = currentLapSeconds;
-			
 				var currentLapMillis = APP.formatter.millis(lapMillis);
+
+				document.getElementById('lapHours').innerText = currentLapHours;
+				document.getElementById('lapMinutes').innerText = currentLapMinutes;
+				document.getElementById('lapSeconds').innerText = currentLapSeconds;
 				document.getElementById('lapMillis').innerText = currentLapMillis;
 			}, 10);
 		},
@@ -56,20 +52,20 @@ APP.timer = (function() {
 		},
 	
 		lap: function() {
-			var lapInMillis = totalMillis - lapStart;
+			var currentLapInMillis = totalMillis - lapStart;
 		
-			laps.push(lapInMillis);
+			laps.push(currentLapInMillis);
 			lapStart = totalMillis;
-			lapTenths = 0;
+			lapMillis = 0;
 			
-			console.log(lapTenths);
+			console.log(lapMillis);
 		
-			var lapHours = APP.formatter.hours(lapInMillis);
-			var lapMinutes = APP.formatter.minutes(lapInMillis);
-			var lapSeconds = APP.formatter.seconds(lapInMillis);
-			var lapTenths = APP.formatter.millis(lapInMillis);
+			var currentLapHours = APP.formatter.hours(currentLapInMillis);
+			var currentLapMinutes = APP.formatter.minutes(currentLapInMillis);
+			var currentLapSeconds = APP.formatter.seconds(currentLapInMillis);
+			var currentLapMillis = APP.formatter.millis(currentLapInMillis);
 		
-			var lapTime = lapHours + ":" + lapMinutes + ":" + lapSeconds + "." + lapTenths;
+			var lapTime = currentLapHours + ":" + currentLapMinutes + ":" + currentLapSeconds + "." + currentLapMillis;
 			var currentLaps = document.getElementById('laps').innerHTML;
 				
 			document.getElementById('laps').innerHTML = currentLaps + '\n<li>' + lapTime + '</li>';
