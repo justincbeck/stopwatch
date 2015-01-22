@@ -84,6 +84,7 @@ button.hidden {
 	background: #eee;
 	border: 1px solid #eee;
 	margin: 0px 0px 0px 0px;
+	overflow: scroll;
 }
 
 #lap-label {
@@ -102,4 +103,8 @@ li {
 	padding: 0px 0px 8px 0px;
 	margin: 10px 20px 0px -20px;
 	border-bottom: 1px solid #ccc;
+}
+
+.debug {
+	display: block;
 }

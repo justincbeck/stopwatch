@@ -10,8 +10,8 @@ APP.timer = (function() {
 	
 	return {
 		start: function() {
-			start = Date.now();
-			lapStart = Date.now();
+			start = Date.now() - totalMillis;
+			lapStart = Date.now() - lapMillis;
 			
 			document.getElementById('start').className = 'hidden';
 			document.getElementById('stop').className = '';
@@ -21,18 +21,26 @@ APP.timer = (function() {
 		
 			timeInterval = setInterval( function() {
 				var tick = Date.now();
-				totalMillis = (tick - start) / 10;
-				lapMillis = (tick - lapStart) / 10;
+				totalMillis = tick - start;
+				lapMillis = tick - lapStart;
 				
-				var currentHours = APP.formatter.hours(totalMillis);
-				var currentMinutes = APP.formatter.minutes(totalMillis);
-				var currentSeconds = APP.formatter.seconds(totalMillis);
-				var currentMillis = APP.formatter.millis(totalMillis);
+				var debugValues = {};
+				debugValues['start'] = "start: " + start;
+				debugValues['lapStart'] = "lapStart: " + lapStart;
+				debugValues['totalMillis'] = "totalMillis: " + totalMillis;
+				debugValues['lapMillis'] = "lapMillis: " + lapMillis;
 				
-				var currentLapHours = APP.formatter.hours(lapMillis);
-				var currentLapMinutes = APP.formatter.minutes(lapMillis);
-				var currentLapSeconds = APP.formatter.seconds(lapMillis);
-				var currentLapMillis = APP.formatter.millis(lapMillis);
+				// APP.debugger.debug(debugValues);
+				
+				var currentHours = APP.formatter.hours(totalMillis / 10);
+				var currentMinutes = APP.formatter.minutes(totalMillis / 10);
+				var currentSeconds = APP.formatter.seconds(totalMillis / 10);
+				var currentMillis = APP.formatter.millis(totalMillis / 10);
+				
+				var currentLapHours = APP.formatter.hours(lapMillis / 10);
+				var currentLapMinutes = APP.formatter.minutes(lapMillis / 10);
+				var currentLapSeconds = APP.formatter.seconds(lapMillis / 10);
+				var currentLapMillis = APP.formatter.millis(lapMillis / 10);
 				
 				if (currentHours > 0)
 				{
@@ -70,10 +78,10 @@ APP.timer = (function() {
 			
 			console.log(lapMillis);
 		
-			var currentLapHours = APP.formatter.hours(lapMillis);
-			var currentLapMinutes = APP.formatter.minutes(lapMillis);
-			var currentLapSeconds = APP.formatter.seconds(lapMillis);
-			var currentLapMillis = APP.formatter.millis(lapMillis);
+			var currentLapHours = APP.formatter.hours(lapMillis / 10);
+			var currentLapMinutes = APP.formatter.minutes(lapMillis / 10);
+			var currentLapSeconds = APP.formatter.seconds(lapMillis / 10);
+			var currentLapMillis = APP.formatter.millis(lapMillis / 10);
 			
 			var lapCount = "<span id=\"lap-label\">Lap " + laps.length + "</span>";
 			
@@ -92,8 +100,6 @@ APP.timer = (function() {
 		},
 	
 		reset: function() {
-			clearInterval(timeInterval);
-			
 			totalMillis = 0;
 			lapMillis = 0;
 			
@@ -128,6 +134,18 @@ APP.formatter = (function() {
 	
 		millis: function(millis) {
 			return pad(Math.floor(millis % 100));
+		}
+	};
+})();
+
+APP.debugger = (function() {
+	
+	return {
+		debug: function(values) {
+			document.getElementById('debugStart').innerText = values['start'];
+			document.getElementById('debugLapStart').innerText = values['lapStart'];
+			document.getElementById('debugTotalMillis').innerText = values['totalMillis'];
+			document.getElementById('debugLapMillis').innerText = values['lapMillis'];
 		}
 	};
 })();
