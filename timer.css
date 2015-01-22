@@ -1,5 +1,5 @@
 body {
-	font-family: Helvetica;
+	font-family: HelveticaNeue-Thin;
 	border: 1px solid #aaa;
 	width: 320px;
 	height: 568px;
@@ -10,7 +10,7 @@ body {
 	color: black;
 	width: 320px;
 	height: 30px;
-	padding: 10px 0px 0px 0px;
+	padding: 12px 0px 0px 0px;
 	background: #eee;
 	border-bottom: 1px solid #ddd;
 }
@@ -29,15 +29,15 @@ body {
 	font-size: 1.0em;
 	color: gray;
 	width: 80px;
-	margin: 0px 45px 0px 0px;
+	margin: 0px 30px 0px 0px;
 	float: right;
 }
 
 #mainDisplay {
-	font-size: 3.0em;
+	font-size: 3.7em;
 	color: black;
 	width: 240px;
-	margin: 0px 0px 0px 35px;
+	margin: 0px 0px 0px 45px;
 	float: left;
 }
 
@@ -49,11 +49,11 @@ body {
 }
 
 button {
-	height: 56px;
-	width: 56px;
+	height: 64px;
+	width: 64px;
 	background: white;
 	border: none;
-	border-radius: 28px;
+	border-radius: 32px;
 }
 
 button.hidden {
@@ -61,11 +61,12 @@ button.hidden {
 }
 
 #start {
-	color: green;
+	color: #0d0;
 	float: left;
 }
 
 #stop {
+	color: red;
 	float: left;
 }
 
@@ -78,13 +79,14 @@ button.hidden {
 }
 
 #laps {
-	height: 288px;
+	height: 284px;
 	background: #eee;
 	border: 1px solid #eee;
 	margin: 0px 0px 0px 00px;
 }
 
 #lap-label {
+	color: #bbb;
 	float: left;
 }
 

@@ -26,18 +26,27 @@ APP.timer = (function() {
 				var currentSeconds = APP.formatter.seconds(totalMillis);
 				var currentMillis = APP.formatter.millis(totalMillis);
 				
-				var currentTime = currentHours + ":" + currentMinutes + ":" + currentSeconds + "." + currentMillis;
-				
-				document.getElementById('mainDisplay').innerHTML = currentTime;
-
 				var currentLapHours = APP.formatter.hours(lapMillis);
 				var currentLapMinutes = APP.formatter.minutes(lapMillis);
 				var currentLapSeconds = APP.formatter.seconds(lapMillis);
 				var currentLapMillis = APP.formatter.millis(lapMillis);
 				
-				var lapTime = currentLapHours + ":" + currentLapMinutes + ":" + currentLapSeconds + "." + currentLapMillis;
+				if (currentHours > 0)
+				{
+					var currentTime = currentHours + ":" + currentMinutes + ":" + currentSeconds;
+					var lapTime = currentLapHours + ":" + currentLapMinutes + ":" + currentLapSeconds;
 
-				document.getElementById('lapDisplay').innerHTML = lapTime;
+				}
+				else
+				{
+					var currentTime = currentMinutes + ":" + currentSeconds + "." + currentMillis;
+					var lapTime = currentLapMinutes + ":" + currentLapSeconds + "." + currentLapMillis;
+
+				}
+				
+				document.getElementById('mainDisplay').innerText = currentTime;
+				document.getElementById('lapDisplay').innerText = lapTime;
+				
 			}, 10);
 		},
 	
@@ -66,10 +75,19 @@ APP.timer = (function() {
 			var currentLapMillis = APP.formatter.millis(currentLapInMillis);
 			
 			var lapCount = "<span id=\"lap-label\">Lap " + laps.length + "</span>";
-			var lapTime = "<span id=\"lap-time\">Lap " + currentLapHours + ":" + currentLapMinutes + ":" + currentLapSeconds + "." + currentLapMillis + "</span>";
+			
+			if (currentLapHours > 0)
+			{
+				var lapTime = "<span id=\"lap-time\">" + currentLapHours + ":" + currentLapMinutes + ":" + currentLapSeconds + "." + currentLapMillis + "</span>";
+			}
+			else
+			{
+				var lapTime = "<span id=\"lap-time\">" + currentLapMinutes + ":" + currentLapSeconds + "." + currentLapMillis + "</span>";
+			}
+
 			var currentLaps = document.getElementById('lap-list').innerHTML;
 				
-			document.getElementById('lap-list').innerHTML = currentLaps + '\n<li>' + lapCount + lapTime + '</li>';
+			document.getElementById('lap-list').innerHTML = '\n<li>' + lapCount + lapTime + '</li>' + currentLaps;
 		},
 	
 		reset: function() {
@@ -78,12 +96,9 @@ APP.timer = (function() {
 			totalMillis = 0;
 			lapMillis = 0;
 			
-			var time = '00:00:00.00';
-			document.getElementById('mainDisplay').innerHTML = time;
-			document.getElementById('lapDisplay').innerHTML = time;
-		
+			document.getElementById('mainDisplay').innerText = "00:00.00";
+			document.getElementById('lapDisplay').innerText = "00:00.00";
 			document.getElementById('lap-list').innerHTML = '';
-			
 			document.getElementById('lap').className = '';
 			document.getElementById('lap').disabled = true;
 			document.getElementById('reset').className = 'hidden';
