@@ -45,12 +45,21 @@ APP.timer = (function() {
 				if (currentHours > 0)
 				{
 					var currentTime = currentHours + ":" + currentMinutes + ":" + currentSeconds;
-					var lapTime = currentLapHours + ":" + currentLapMinutes + ":" + currentLapSeconds;
 
 				}
 				else
 				{
 					var currentTime = currentMinutes + ":" + currentSeconds + "." + currentMillis;
+
+				}
+				
+				if (currentLapHours > 0)
+				{
+					var lapTime = currentLapHours + ":" + currentLapMinutes + ":" + currentLapSeconds;
+
+				}
+				else
+				{
 					var lapTime = currentLapMinutes + ":" + currentLapSeconds + "." + currentLapMillis;
 
 				}
