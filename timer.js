@@ -163,18 +163,18 @@ document.getElementById('stop').className = 'hidden';
 document.getElementById('reset').className = 'hidden';
 document.getElementById('lap').disabled = true;
 
-document.getElementById('start').onclick = function () {
+document.getElementById('start').addEventListener('click', function () {
 	APP.timer.start();
-};
+});
 
-document.getElementById('stop').onclick = function () {
+document.getElementById('stop').addEventListener('click', function () {
 	APP.timer.stop();
-};
+});
 
-document.getElementById('lap').onclick = function () {
+document.getElementById('lap').addEventListener('click', function () {
 	APP.timer.lap();
-};
+});
 
-document.getElementById('reset').onclick = function () {
+document.getElementById('reset').addEventListener('click', function () {
 	APP.timer.reset();
-};
+});
